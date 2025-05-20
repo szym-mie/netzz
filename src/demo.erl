@@ -1,4 +1,4 @@
--module(tst).
+-module(demo).
 -export([run/0]).
 
 run() ->
