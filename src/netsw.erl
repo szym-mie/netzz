@@ -48,7 +48,7 @@ data(Dev, {Fdb}, _PortIdSrc, BindDst, Frame) ->
             io:format("SW: ~p ~p= --> [M]~n", [self(), PortIdFwd]);
         {no_fwd} -> 
             % port not known/broadcast MAC, send to all ports
-            netdv:broadcast(Dev, Frame),
+            netdv:broadcast(Dev, PortIdDst, Frame),
             io:format("SW: ~p broad --> [M]~n", [self()])
     end.
 

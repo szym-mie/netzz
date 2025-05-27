@@ -1,6 +1,6 @@
 -module(netdv).
 -export([
-    ports/1, port/2, def_mac/3, set_ip/4, set_ip/5, unicast/3, broadcast/2, 
+    ports/1, port/2, def_mac/3, set_ip/4, set_ip/5, unicast/3, broadcast/3, 
     run/3, pair/2, issue/2
 ]).
 -include("defs.hrl").
@@ -44,11 +44,12 @@ unicast(Dev, PortIdSrc, Frame) ->
             {no_port}
     end.
 
-broadcast(Dev, Frame) ->
+broadcast(Dev, PortIdSrc, Frame) ->
+    Ports = [Port || Port <- ports(Dev), Port#port.port_id =/= PortIdSrc],
     lists:foreach(
-        fun(#port{port_id=PortIdSrc}) -> 
-            unicast(Dev, PortIdSrc, Frame) 
-        end, ports(Dev)
+        fun(#port{port_id=PortIdDst}) -> 
+            unicast(Dev, PortIdDst, Frame) 
+        end, Ports
     ),
     {ok}.
 

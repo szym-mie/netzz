@@ -18,6 +18,10 @@
 -record(eth2, {mac_src, mac_dst, eth_type, data}).
 -record(ipv4, {ip_src, ip_dst, ident, more_fra, fra_offset, ttl, proto, data}).
 
+%%% PC structs
+-record(arp, {ip_addr, mac_addr, queue}).
+-define(ARP_KEYPOS, {keypos, #arp.ip_addr}).
+
 %%% Switch structs
 -record(pfwd, {mac_addr, port_id}).
 -define(PFWD_KEYPOS, {keypos, #pfwd.mac_addr}).
